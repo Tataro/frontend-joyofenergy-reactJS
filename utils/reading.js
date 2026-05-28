@@ -36,3 +36,18 @@ export const filterByDays = (readings, days) => {
   const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
   return readings.filter(({ time }) => time >= cutoff);
 };
+
+export const getCurrentPower = (readings) => {
+  if (!readings.length) return 0;
+  return readings.reduce((latest, r) => (r.time > latest.time ? r : latest)).value;
+};
+
+export const getDailyAverage = (readings) => {
+  const dailyTotals = groupByDay(readings);
+  if (!dailyTotals.length) return 0;
+  return dailyTotals.reduce((sum, { value }) => sum + value, 0) / dailyTotals.length;
+};
+
+export const getTotalConsumption = (readings) => {
+  return readings.reduce((sum, { value }) => sum + value, 0);
+};

@@ -1,4 +1,12 @@
-import { getReadings, groupByDay, sortByTime, filterByDays } from "./reading";
+import {
+  getReadings,
+  groupByDay,
+  sortByTime,
+  filterByDays,
+  getCurrentPower,
+  getDailyAverage,
+  getTotalConsumption,
+} from "./reading";
 
 describe("#reading", function () {
   describe("#getReadings", () => {
@@ -164,6 +172,52 @@ describe("#reading", function () {
         { time: now - 2000, value: 2 },
       ];
       expect(filterByDays(readings, 7)).toHaveLength(2);
+    });
+  });
+
+  describe("#getCurrentPower", () => {
+    it("should return the value of the most recent reading", () => {
+      const readings = [
+        { time: 1000, value: 0.3 },
+        { time: 3000, value: 0.7 },
+        { time: 2000, value: 0.5 },
+      ];
+      expect(getCurrentPower(readings)).toBe(0.7);
+    });
+
+    it("should return 0 for empty readings", () => {
+      expect(getCurrentPower([])).toBe(0);
+    });
+  });
+
+  describe("#getDailyAverage", () => {
+    it("should return the mean of daily totals", () => {
+      const readings = [
+        { time: new Date(2021, 0, 1, 10).getTime(), value: 0.5 },
+        { time: new Date(2021, 0, 1, 11).getTime(), value: 0.5 },
+        { time: new Date(2021, 0, 2, 10).getTime(), value: 0.6 },
+      ];
+      // day 1 total = 1.0, day 2 total = 0.6, average = 0.8
+      expect(getDailyAverage(readings)).toBeCloseTo(0.8);
+    });
+
+    it("should return 0 for empty readings", () => {
+      expect(getDailyAverage([])).toBe(0);
+    });
+  });
+
+  describe("#getTotalConsumption", () => {
+    it("should return the sum of all reading values", () => {
+      const readings = [
+        { time: 1000, value: 0.3 },
+        { time: 2000, value: 0.5 },
+        { time: 3000, value: 0.2 },
+      ];
+      expect(getTotalConsumption(readings)).toBeCloseTo(1.0);
+    });
+
+    it("should return 0 for empty readings", () => {
+      expect(getTotalConsumption([])).toBe(0);
     });
   });
 
