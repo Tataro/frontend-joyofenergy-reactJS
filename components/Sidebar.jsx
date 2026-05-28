@@ -1,3 +1,5 @@
+import { getCurrentPower, getDailyAverage, getTotalConsumption } from "../utils/reading";
+
 const DeviceSection = ({ title, usage }) => (
   <div className="shadow-2 roundedMore bg-super-light-grey mb1">
     <p className="darkgray pl2 pt1 pb1">{title}</p>
@@ -11,11 +13,21 @@ const SummarySection = ({ summary, subtitle }) => (
     <p className="darkgray mb2">{subtitle}</p>
   </>
 );
-export const Sidebar = () => (
+
+export const Sidebar = ({ readings = [] }) => (
   <>
-    <SummarySection summary="⚡️ 1.4kW" subtitle="Power draw" />
-    <SummarySection summary="☀️️ 5.8kW" subtitle="Solar power production" />
-    <SummarySection summary="🔌️ 4.4kW" subtitle="Fed into grid" />
+    <SummarySection
+      summary={`⚡️ ${getCurrentPower(readings).toFixed(2)}kW`}
+      subtitle="Power draw"
+    />
+    <SummarySection
+      summary={`☀️️ ${getDailyAverage(readings).toFixed(2)}kWh/day`}
+      subtitle="Daily average"
+    />
+    <SummarySection
+      summary={`🔌️ ${getTotalConsumption(readings).toFixed(1)}kWh`}
+      subtitle="Total consumption"
+    />
 
     <section className="h5 darkgray mb2">
       <h4 className="h4 mb1">Your devices:</h4>
