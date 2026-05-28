@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "test": "vitest run",
+    "test-coverage": "vitest run --coverage",
     "test-watch": "vitest --watch",
     "start": "vite dev",
     "format": "prettier -w ./*.js components/*.jsx ./*.html"
@@ -28,6 +29,8 @@
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@vitejs/plugin-react": "^4.5.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "jsdom": "^27.0.1",
     "prettier": "^2.3.1",
     "vite": "^6.3.5",
     "vitest": "^3.2.4"
