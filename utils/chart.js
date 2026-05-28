@@ -15,7 +15,7 @@ export const formatDateLabel = (timestamp) => {
 };
 
 export const renderChart = (containerId, readings) => {
-  chartJs.Chart.defaults.font.size = "10px";
+  chartJs.Chart.defaults.font.size = 10;
 
   chartJs.Chart.register.apply(
     null,
