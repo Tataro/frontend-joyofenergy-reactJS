@@ -32,4 +32,11 @@ describe("Sidebar", () => {
     render(<Sidebar readings={mockReadings} />);
     expect(screen.getByText("Your devices:")).toBeInTheDocument();
   });
+
+  it("renders gracefully with no readings", () => {
+    render(<Sidebar />);
+    expect(screen.getByText("⚡️ 0.00kW")).toBeInTheDocument();
+    expect(screen.getByText("☀️️ 0.00kWh/day")).toBeInTheDocument();
+    expect(screen.getByText("🔌️ 0.0kWh")).toBeInTheDocument();
+  });
 });
