@@ -4,7 +4,7 @@ import { EnergyConsumption } from "./EnergyConsumption.jsx";
 import { getReadings } from "../utils/reading";
 
 export const App = () => {
-  const [readings, setReadings] = useState();
+  const [readings, setReadings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
