@@ -3,13 +3,13 @@ import { renderChart } from "../utils/chart.js";
 import { groupByDay, sortByTime, filterByDays } from "../utils/reading";
 
 const TIME_RANGES = [7, 30, 90];
+const CONTAINER_ID = "usageChart";
 
-export const EnergyConsumption = ({ readings }) => {
-  const containerId = "usageChart";
+export const EnergyConsumption = ({ readings = [] }) => {
   const [timeRange, setTimeRange] = useState(30);
 
   useEffect(() => {
-    renderChart(containerId, sortByTime(groupByDay(filterByDays(readings, timeRange))));
+    renderChart(CONTAINER_ID, sortByTime(groupByDay(filterByDays(readings, timeRange))));
   }, [readings, timeRange]);
 
   return (
@@ -29,7 +29,7 @@ export const EnergyConsumption = ({ readings }) => {
         ))}
       </section>
       <section className="chartHeight mb3">
-        <canvas id={containerId} />
+        <canvas id={CONTAINER_ID} />
       </section>
     </>
   );
