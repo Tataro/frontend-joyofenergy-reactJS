@@ -1,4 +1,4 @@
-import { getReadings, groupByDay, sortByTime } from "./reading";
+import { getReadings, groupByDay, sortByTime, filterByDays } from "./reading";
 
 describe("#reading", function () {
   describe("#getReadings", () => {
@@ -133,6 +133,37 @@ describe("#reading", function () {
           value: 25,
         },
       ]);
+    });
+  });
+
+  describe("#filterByDays", () => {
+    it("should return only readings within the last N days", () => {
+      const now = Date.now();
+      const day = 24 * 60 * 60 * 1000;
+      const readings = [
+        { time: now - 1 * day, value: 1 },
+        { time: now - 6 * day, value: 2 },
+        { time: now - 8 * day, value: 3 },
+      ];
+      const result = filterByDays(readings, 7);
+      expect(result).toHaveLength(2);
+      expect(result.map((r) => r.value)).toEqual(expect.arrayContaining([1, 2]));
+    });
+
+    it("should return empty array when all readings are outside the range", () => {
+      const now = Date.now();
+      const day = 24 * 60 * 60 * 1000;
+      const readings = [{ time: now - 100 * day, value: 1 }];
+      expect(filterByDays(readings, 7)).toHaveLength(0);
+    });
+
+    it("should return all readings when all are within range", () => {
+      const now = Date.now();
+      const readings = [
+        { time: now - 1000, value: 1 },
+        { time: now - 2000, value: 2 },
+      ];
+      expect(filterByDays(readings, 7)).toHaveLength(2);
     });
   });
 

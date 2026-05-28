@@ -31,3 +31,8 @@ export const sortByTime = (readings) => {
     (readingA, readingB) => readingA.time - readingB.time
   );
 };
+
+export const filterByDays = (readings, days) => {
+  const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+  return readings.filter(({ time }) => time >= cutoff);
+};
